@@ -28,17 +28,15 @@ services:
     ## bcoin docker services
     command: server --dev --watch-poll --client-id=_docker
 
-  securityc:
-    image: bpanel/securityc
+  nginx:
+    image: jwilder/nginx-proxy
     restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
-    env_file:
-      - ./securityc.env
     volumes:
       # mount local cert directory into container
-      - certs:/etc/ssl/nginx
+      - ./secrets/cert:/etc/ssl/nginx
 
   bcoin:
     ## Use image to to pull from docker hub
